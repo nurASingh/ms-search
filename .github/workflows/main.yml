@@ -1,0 +1,25 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image 
+      run: docker build . --file Dockerfile --tag arunsingh/ms-search:latest 
+    - name: Docker Login  
+      uses: docker/login-action@v1.10.0
+      with:
+        username: arunsingh
+        password: f17d4b70-4bfe-4c15-95fd-f622ffdfabfb
+    - name: Build the Docker image 
+      run:  docker push arunsingh/ms-search:latest  
